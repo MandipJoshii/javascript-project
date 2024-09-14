@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULATOR</title>
+    <style>
+   .mainbody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+   }
+
+   button{
+    width: 150px;
+    height: 55px;
+    border-radius: 15px;
+    cursor: pointer;
+   }
+
+    </style>
+</head>
+<body>
+    <div class="mainbody">
+
+        <h1>------CALCULATOR------</h1>
+
+        <p id="num1"></p>
+        <p id="num2"></p>
+
+
+        <button onclick="add()">add</button>
+        <button onclick="sub()">substract</button>
+        <button onclick="multi()">multiply</button>
+        <button onclick="div()">divide</button>
+
+        <p id="display" onclick="dis()">DISPLAY : </p>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>

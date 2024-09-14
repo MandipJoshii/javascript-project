@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            display: flex;
+            background-color: antiquewhite;
+        }
+
+        .calculator {
+            background-color: rgb(15, 15, 15);
+
+            height: 80vh;
+        }
+
+        .display {
+            width: 100%;
+            height: 80px;
+            background-color: #333;
+            color: white;
+            text-align: right;
+            padding: 20px;
+            font-size: 2rem;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button{
+            padding: 20px;
+            font-size: 1.5rem;
+            background-color: #505050;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .orange {
+            background-color: #ff9500;
+        }
+
+        .light-grey {
+            background-color: #d4d4d2;
+            color: black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="calculator">
+        <div id="display" class="display">0</div>
+        <div class="buttons">
+            <button class="button light-grey" onclick="clearAll()">AC</button>
+            <button class="button light-grey" onclick="dc()">DC</button>
+            <button class="button light-grey" onclick="percent()">%</button>
+            <button class="button orange" onclick="setOperator('/')">÷</button>
+
+            <button class="button" onclick="addNum('7')">7</button>
+            <button class="button" onclick="addNum('8')">8</button>
+            <button class="button" onclick="addNum('9')">9</button>
+            <button class="button orange" onclick="setOperator('*')">×</button>
+
+            <button class="button" onclick="addNum('4')">4</button>
+            <button class="button" onclick="addNum('5')">5</button>
+            <button class="button" onclick="addNum('6')">6</button>
+            <button class="button orange" onclick="setOperator('-')">−</button>
+
+            <button class="button" onclick="addNum('1')">1</button>
+            <button class="button" onclick="addNum('2')">2</button>
+            <button class="button" onclick="addNum('3')">3</button>
+            <button class="button orange" onclick="setOperator('+')">+</button>
+
+            <button class="button zero" onclick="addNum('0')">0</button>
+            <button class="button" onclick="addNum('.')">.</button>
+            <button class="button orange" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

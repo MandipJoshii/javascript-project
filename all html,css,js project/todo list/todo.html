@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO LIST | BASIC</title>
+
+    <style>
+        body {
+            background-color: deepskyblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .mainbody {
+            background-color: LavenderBlush;
+            width: 500px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .maincontent {
+            font-weight: 800;
+            font-size: large;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        .textfield {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .textcontent {
+            width: 90%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid white;
+            font-size: 16px;
+        }
+
+        .todolist {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .todolist li {
+            background-color: white;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .todolist li .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .todolist li button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: deepskyblue;
+            color: white;
+            font-size: 12px;
+        }
+
+        .todolist li button.edit {
+            background-color: orange;
+        }
+
+        .todolist li button.delete {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainbody">
+        <h3 class="maincontent">TODO LIST</h3>
+
+        <div class="textfield">
+            <input id="todo-input" class="textcontent" type="text" placeholder="ENTER YOUR TODOS">
+        </div>
+
+        <ul id="todo-list" class="todolist">
+            <!-- TODO items will be displayed here -->
+        </ul>
+    </div>
+
+    <script>
+        // Getting references to DOM elements
+        const todoInput = document.getElementById('todo-input');
+        const todoList = document.getElementById('todo-list');
+        let editTodoElement = null;
+
+        // Load saved todos from localStorage on page load
+        document.addEventListener('DOMContentLoaded', loadTodosFromLocalStorage);
+
+        // Add a todo when the user presses 'Enter'
+        todoInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                if (todoInput.value.trim() !== '') {
+                    if (editTodoElement) {
+                        // If editing an item
+                        editTodoElement.firstChild.textContent = todoInput.value;
+                        updateLocalStorage();
+                        editTodoElement = null;
+                        todoInput.value = '';
+                    } else {
+                        // Add new todo
+                        addTodoItem(todoInput.value);
+                        todoInput.value = '';
+                    }
+                }
+            }
+        });
+
+        // Function to add a todo item
+        function addTodoItem(todoText) {
+            const li = document.createElement('li');
+            const textSpan = document.createElement('span');
+            textSpan.textContent = todoText;
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.classList.add('actions');
+
+            // Edit button
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.classList.add('edit');
+            editButton.onclick = function () {
+                todoInput.value = todoText;
+                editTodoElement = li;
+            };
+
+            // Delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete');
+            deleteButton.onclick = function () {
+                li.remove();
+                updateLocalStorage();
+            };
+
+            // Append buttons to actions div and actions div to list item
+            actionsDiv.appendChild(editButton);
+            actionsDiv.appendChild(deleteButton);
+            li.appendChild(textSpan);
+            li.appendChild(actionsDiv);
+
+            // Append list item to todo list
+            todoList.appendChild(li);
+
+            // Update localStorage after adding a new item
+            updateLocalStorage();
+        }
+
+        // Function to update localStorage with the current todos
+        function updateLocalStorage() {
+            const todos = [];
+            document.querySelectorAll('#todo-list li').forEach(function (li) {
+                todos.push(li.firstChild.textContent);
+            });
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        // Function to load todos from localStorage
+        function loadTodosFromLocalStorage() {
+            const savedTodos = JSON.parse(localStorage.getItem('todos'));
+            if (savedTodos) {
+                savedTodos.forEach(function (todo) {
+                    addTodoItem(todo);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
